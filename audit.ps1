@@ -240,13 +240,13 @@ $testResults = $allResults | Where-Object { $_.IsTestFile }
 # --- Main findings ---
 Write-Header "Findings: $($prodResults.Count) match(es) in production code" "Yellow"
 if ($prodResults.Count -gt 0) {
-    $prodResults | Format-Table Category, File, Line, Content -Wrap
+    $prodResults | Format-Table Category, @{L="LineNo";E={$_.Line}}, File, Content -Wrap
 }
 
 # --- Test file findings (lower priority) ---
 if ($testResults.Count -gt 0) {
     Write-Header "Test File Findings: $($testResults.Count) match(es) - lower priority" "DarkYellow"
-    $testResults | Format-Table Category, File, Line, Content -Wrap
+    $testResults | Format-Table Category, @{L="LineNo";E={$_.Line}}, File, Content -Wrap
 }
 
 # --- Files to review ---
